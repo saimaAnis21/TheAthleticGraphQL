@@ -53,11 +53,24 @@ export type League = {
   updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
+export type PageArticle = {
+  __typename?: 'PageArticle';
+  article?: Maybe<Array<Article>>;
+  pageInfo: PageInfo;
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  hasNextPage: Scalars['Boolean']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   article?: Maybe<Article>;
   articles?: Maybe<Array<Maybe<Article>>>;
+  leagueArticles?: Maybe<Array<Maybe<Article>>>;
   leagues: Array<League>;
+  pageArticles?: Maybe<PageArticle>;
   teamArticles?: Maybe<Array<Maybe<Article>>>;
   teams: Array<Team>;
 };
@@ -68,9 +81,16 @@ export type QueryArticleArgs = {
 };
 
 
-export type QueryArticlesArgs = {
+export type QueryLeagueArticlesArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryPageArticlesArgs = {
+  leagueIds?: InputMaybe<Array<Scalars['String']['input']>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
+  teamIds?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 
@@ -166,6 +186,8 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   League: ResolverTypeWrapper<League>;
+  PageArticle: ResolverTypeWrapper<PageArticle>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Team: ResolverTypeWrapper<Team>;
@@ -179,6 +201,8 @@ export type ResolversParentTypes = {
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   League: League;
+  PageArticle: PageArticle;
+  PageInfo: PageInfo;
   Query: {};
   String: Scalars['String']['output'];
   Team: Team;
@@ -220,10 +244,23 @@ export type LeagueResolvers<ContextType = ApolloContext, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type PageArticleResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['PageArticle'] = ResolversParentTypes['PageArticle']> = {
+  article?: Resolver<Maybe<Array<ResolversTypes['Article']>>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageInfoResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+  hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   article?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<QueryArticleArgs, 'id'>>;
-  articles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType, Partial<QueryArticlesArgs>>;
+  articles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType>;
+  leagueArticles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType, RequireFields<QueryLeagueArticlesArgs, 'id'>>;
   leagues?: Resolver<Array<ResolversTypes['League']>, ParentType, ContextType>;
+  pageArticles?: Resolver<Maybe<ResolversTypes['PageArticle']>, ParentType, ContextType, Partial<QueryPageArticlesArgs>>;
   teamArticles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType, RequireFields<QueryTeamArticlesArgs, 'id'>>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
 };
@@ -243,6 +280,8 @@ export type Resolvers<ContextType = ApolloContext> = {
   Article?: ArticleResolvers<ContextType>;
   Author?: AuthorResolvers<ContextType>;
   League?: LeagueResolvers<ContextType>;
+  PageArticle?: PageArticleResolvers<ContextType>;
+  PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
 };

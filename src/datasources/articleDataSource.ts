@@ -18,4 +18,36 @@ export class ArticleDataSource extends RESTDataSource {
   async getTeamArticles(id: string) {
     return this.get(`teams/${id}/articles`);
   }
+
+  async getTeamIdsArticles(teamsIds: string[]) {
+    const apiCalls = teamsIds.map((id) => this.getTeamArticles(id));
+    const apiResponse = await Promise.allSettled(apiCalls);
+
+    const response: any[] = [];
+    apiResponse.forEach((i) => {
+      if (i.status === "fulfilled") {
+        response.push(...i.value);
+      }
+    });
+
+    return response;
+  }
+
+  async getLeagueArticles(id: string) {
+    return this.get(`leagues/${id}/articles`);
+  }
+
+  async getLeagueIdsArticles(leaguesIds: string[]) {
+    const apiCalls = leaguesIds.map((id) => this.getLeagueArticles(id));
+    const apiResponse = await Promise.allSettled(apiCalls);
+
+    const response: any[] = [];
+    apiResponse.forEach((i) => {
+      if (i.status === "fulfilled") {
+        response.push(...i.value);
+      }
+    });
+
+    return response;
+  }
 }

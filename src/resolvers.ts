@@ -4,6 +4,7 @@
 // @ts-nocheck
 
 import { Resolvers } from "schema-types";
+import {slice, forEach, includes} from "lodash"
 
 const resolvers: Resolvers = {
   Article: {
@@ -27,6 +28,28 @@ const resolvers: Resolvers = {
       });
       return articles;
     },
+    async pageArticles(_root, { offset, limit, teamIds, leagueIds }, { dataSources }) {
+      if (offset < 0) throw new Error("offset must be positive");
+
+      const articles = await dataSources.articleDataSource.getArticles();
+      const selectedArticles = [];
+      if (teamIds.length < 0 && leagueIds.length < 0) {
+        selectedArticles = [...articles];
+      }
+      forEach(articles, (item) => {
+        if (includes(teamIds, item.team.id) || includes(leagueIds, item.league.id)) {
+          selectedArticles.push(item);
+        }
+      });
+      selectedArticles.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA;
+      });
+      const pageArticles = slice(selectedArticles, offset, offset + limit);
+      const hasNextPage = slice(selectedArticles, offset + limit, articles.length - 1).length > 0;
+      return { article: pageArticles, pageInfo: { hasNextPage } };
+    },
     async article(_root, { id }, { dataSources }) {
       return dataSources.articleDataSource.getArticle(id);
     },
@@ -40,6 +63,10 @@ const resolvers: Resolvers = {
     },
     async teamArticles(_root, { id }, { dataSources }) {
       const articles = await dataSources.articleDataSource.getTeamArticles(id);
+      return articles;
+    },
+    async leagueArticles(_root, { id }, { dataSources }) {
+      const articles = await dataSources.articleDataSource.getLeagueArticles(id);
       return articles;
     },
   },

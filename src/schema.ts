@@ -1,6 +1,9 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
+  type PageInfo {
+    hasNextPage: Boolean!
+  }
   type Article {
     id: ID!
     author: Author
@@ -11,6 +14,11 @@ export default gql`
     team: Team
     title: String!
     updatedAt: String
+  }
+
+  type PageArticle {
+    article: [Article!]
+    pageInfo: PageInfo!
   }
 
   type Author {
@@ -36,10 +44,12 @@ export default gql`
 
   type Query {
     article(id: ID!): Article
-    articles(offset: Int, limit: Int): [Article]
+    articles: [Article]
     leagues: [League!]!
     teams: [Team!]!
     teamArticles(id: ID!): [Article]
+    leagueArticles(id: ID!): [Article]
+    pageArticles(offset: Int, limit: Int, teamIds: [String!], leagueIds: [String!]): PageArticle
   }
 
   type Team {
