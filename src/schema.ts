@@ -36,7 +36,7 @@ export default gql`
 
   type Query {
     article(id: ID!): Article
-    articles: [Article]
+    articles(offset: Int, limit: Int): [Article]
     leagues: [League!]!
     teams: [Team!]!
     teamArticles(id: ID!): [Article]

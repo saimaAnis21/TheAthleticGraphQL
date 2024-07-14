@@ -68,6 +68,12 @@ export type QueryArticleArgs = {
 };
 
 
+export type QueryArticlesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryTeamArticlesArgs = {
   id: Scalars['ID']['input'];
 };
@@ -158,6 +164,7 @@ export type ResolversTypes = {
   Author: ResolverTypeWrapper<Author>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   League: ResolverTypeWrapper<League>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -170,6 +177,7 @@ export type ResolversParentTypes = {
   Author: Author;
   Boolean: Scalars['Boolean']['output'];
   ID: Scalars['ID']['output'];
+  Int: Scalars['Int']['output'];
   League: League;
   Query: {};
   String: Scalars['String']['output'];
@@ -214,7 +222,7 @@ export type LeagueResolvers<ContextType = ApolloContext, ParentType extends Reso
 
 export type QueryResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   article?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<QueryArticleArgs, 'id'>>;
-  articles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType>;
+  articles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType, Partial<QueryArticlesArgs>>;
   leagues?: Resolver<Array<ResolversTypes['League']>, ParentType, ContextType>;
   teamArticles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType, RequireFields<QueryTeamArticlesArgs, 'id'>>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;

@@ -18,8 +18,14 @@ const resolvers: Resolvers = {
     },
   },
   Query: {
-    async articles(_root,_, { dataSources }) {
-      return dataSources.articleDataSource.getArticles();
+    async articles(_root, _, { dataSources }) {
+      const articles = await dataSources.articleDataSource.getArticles();
+      articles.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return dateB - dateA;
+      });
+      return articles;
     },
     async article(_root, { id }, { dataSources }) {
       return dataSources.articleDataSource.getArticle(id);
