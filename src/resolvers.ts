@@ -38,6 +38,10 @@ const resolvers: Resolvers = {
     async teams(_root, _args, { dataSources }) {
       return dataSources.teamDataSource.getTeams();
     },
+    async teamArticles(_root, { id }, { dataSources }) {
+      const articles = await dataSources.articleDataSource.getTeamArticles(id);
+      return articles;
+    },
   },
   Team: {
     async league(source, _fields, { dataSources }) {
