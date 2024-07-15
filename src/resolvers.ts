@@ -22,7 +22,6 @@ const addFollowed = async (input, dataSources, partitionKey) => {
       response.push(i.value);
     }
   });
-  console.log("response", response);
   const success = !!response;
   return { success: true };
 };
@@ -90,7 +89,8 @@ const resolvers: Resolvers = {
       return articles;
     },
     async followedTeams(_root, _args, { dataSources }) {
-      return await dataSources.keyValueDatabase.query({ partitionKey: "followedTeams" });
+      const res = await dataSources.keyValueDatabase.query({ partitionKey: "followedTeams" });
+      return res
     },
     async followedLeagues(_root, _args, { dataSources }) {
       return await dataSources.keyValueDatabase.query({ partitionKey: "followedLeagues" });
@@ -98,10 +98,16 @@ const resolvers: Resolvers = {
   },
   Mutation: {
     async addFollowedTeams(_, { input }, { dataSources }) {
+      await dataSources.keyValueDatabase.delete({
+        partitionKey: "followedTeams",
+      });
       const partitionKey= "followedTeams";
       return addFollowed(input, dataSources, partitionKey);
     },
     async addFollowedLeagues(_, { input }, { dataSources }) {
+      await dataSources.keyValueDatabase.delete({
+        partitionKey: "followedLeagues",
+      });
        const partitionKey = "followedLeagues";
        return addFollowed(input, dataSources, partitionKey);
     },

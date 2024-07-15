@@ -62,8 +62,14 @@ export class KeyValueDatabase extends DataSource {
   }: {
     partitionKey: string;
     sortKey?: string;
-  }) {
-    delete database[partitionKey + ":" + sortKey];
+    }) {
+    
+    const allEntries: Array<any> = Object.keys(database)
+      .filter((key) => key.startsWith(partitionKey + ":"))
+      .map((key) => database[key]);
+    
+    allEntries.forEach((i) => delete database[partitionKey + ":" + i.id]);
+    
     writeFile(DB_FILE, JSON.stringify(database));
   }
 }
