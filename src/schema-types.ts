@@ -17,6 +17,11 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AddArgs = {
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
 export type AddResponse = {
   __typename?: 'AddResponse';
   message?: Maybe<Scalars['String']['output']>;
@@ -73,20 +78,18 @@ export type League = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addFollowedLeague?: Maybe<AddResponse>;
+  addFollowedLeagues?: Maybe<AddResponse>;
   addFollowedTeams?: Maybe<AddResponse>;
 };
 
 
-export type MutationAddFollowedLeagueArgs = {
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
+export type MutationAddFollowedLeaguesArgs = {
+  input?: InputMaybe<Array<InputMaybe<AddArgs>>>;
 };
 
 
 export type MutationAddFollowedTeamsArgs = {
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
+  input?: InputMaybe<Array<InputMaybe<AddArgs>>>;
 };
 
 export type PageArticle = {
@@ -218,6 +221,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  AddArgs: AddArgs;
   AddResponse: ResolverTypeWrapper<AddResponse>;
   Article: ResolverTypeWrapper<Article>;
   Author: ResolverTypeWrapper<Author>;
@@ -237,6 +241,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  AddArgs: AddArgs;
   AddResponse: AddResponse;
   Article: Article;
   Author: Author;
@@ -309,8 +314,8 @@ export type LeagueResolvers<ContextType = ApolloContext, ParentType extends Reso
 };
 
 export type MutationResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addFollowedLeague?: Resolver<Maybe<ResolversTypes['AddResponse']>, ParentType, ContextType, RequireFields<MutationAddFollowedLeagueArgs, 'id' | 'name'>>;
-  addFollowedTeams?: Resolver<Maybe<ResolversTypes['AddResponse']>, ParentType, ContextType, RequireFields<MutationAddFollowedTeamsArgs, 'id' | 'name'>>;
+  addFollowedLeagues?: Resolver<Maybe<ResolversTypes['AddResponse']>, ParentType, ContextType, Partial<MutationAddFollowedLeaguesArgs>>;
+  addFollowedTeams?: Resolver<Maybe<ResolversTypes['AddResponse']>, ParentType, ContextType, Partial<MutationAddFollowedTeamsArgs>>;
 };
 
 export type PageArticleResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['PageArticle'] = ResolversParentTypes['PageArticle']> = {

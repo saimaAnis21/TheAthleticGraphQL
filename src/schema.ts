@@ -78,8 +78,12 @@ export default gql`
     message: String
     success: Boolean!
   }
+  input AddArgs {
+    id: String!
+    name: String!
+  }
   type Mutation {
-    addFollowedTeams(id: String!, name: String!): AddResponse
-    addFollowedLeague(id: String!, name: String!): AddResponse
+    addFollowedTeams(input: [AddArgs]): AddResponse
+    addFollowedLeagues(input: [AddArgs]): AddResponse
   }
 `;

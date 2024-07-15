@@ -4,8 +4,28 @@
 // @ts-nocheck
 
 import { Resolvers } from "schema-types";
-import {slice, forEach, includes} from "lodash"
+import { slice, forEach, includes } from "lodash"
+import { addFollowed } from "./helper";
 
+const addFollowed = async (input, dataSources, partitionKey) => {
+  const apiCalls = input.map(({ id, name }) =>
+    dataSources.keyValueDatabase.put({
+      partitionKey,
+      sortKey: id,
+      item: { id, name },
+    })
+  );
+  const apiResponse = await Promise.allSettled(apiCalls);
+  const response: any[] = [];
+  apiResponse.forEach((i) => {
+    if (i.status === "fulfilled") {
+      response.push(i.value);
+    }
+  });
+  console.log("response", response);
+  const success = !!response;
+  return { success: true };
+};
 const resolvers: Resolvers = {
   Article: {
     async author(source, _fields, { dataSources }) {
@@ -77,23 +97,13 @@ const resolvers: Resolvers = {
     },
   },
   Mutation: {
-    async addFollowedTeams(_, { id, name }, { dataSources }) {
-      const res = await dataSources.keyValueDatabase.put({
-        partitionKey: "followedTeams",
-        sortKey: id,
-        item: { id, name },
-      });
-      const success = !!res;
-      return { success };
+    async addFollowedTeams(_, { input }, { dataSources }) {
+      const partitionKey= "followedTeams";
+      return addFollowed(input, dataSources, partitionKey);
     },
-    async addFollowedLeague(_, { id, name }, { dataSources }) {
-      const res = await dataSources.keyValueDatabase.put({
-        partitionKey: "followedLeagues",
-        sortKey: id,
-        item: { id, name },
-      });
-      const success = !!res;
-      return { success };
+    async addFollowedLeagues(_, { input }, { dataSources }) {
+       const partitionKey = "followedLeagues";
+       return addFollowed(input, dataSources, partitionKey);
     },
   },
   Team: {
