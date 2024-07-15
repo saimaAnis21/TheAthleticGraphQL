@@ -53,6 +53,7 @@ export class KeyValueDatabase extends DataSource {
   }) {
     database[partitionKey + ":" + sortKey] = item;
     writeFile(DB_FILE, JSON.stringify(database));
+    return database[partitionKey + ":" + sortKey];
   }
 
   async delete({

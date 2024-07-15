@@ -50,6 +50,8 @@ export default gql`
     teamArticles(id: ID!): [Article]
     leagueArticles(id: ID!): [Article]
     pageArticles(offset: Int, limit: Int, teamIds: [String!], leagueIds: [String!]): PageArticle
+    followedTeams: [FollowedTeam!]
+    followedLeagues: [FollowedLeague!]
   }
 
   type Team {
@@ -60,5 +62,24 @@ export default gql`
     name: String!
     shortname: String!
     updatedAt: String
+  }
+
+  type FollowedTeam {
+    id: String!
+    name: String!
+  }
+
+  type FollowedLeague {
+    id: String!
+    name: String!
+  }
+
+  type AddResponse {
+    message: String
+    success: Boolean!
+  }
+  type Mutation {
+    addFollowedTeams(id: String!, name: String!): AddResponse
+    addFollowedLeague(id: String!, name: String!): AddResponse
   }
 `;

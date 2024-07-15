@@ -17,6 +17,12 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AddResponse = {
+  __typename?: 'AddResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+};
+
 export type Article = {
   __typename?: 'Article';
   author?: Maybe<Author>;
@@ -41,6 +47,18 @@ export type Author = {
   updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
+export type FollowedLeague = {
+  __typename?: 'FollowedLeague';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type FollowedTeam = {
+  __typename?: 'FollowedTeam';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type League = {
   __typename?: 'League';
   createdAt: Scalars['String']['output'];
@@ -51,6 +69,24 @@ export type League = {
   sportType: Scalars['String']['output'];
   title: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addFollowedLeague?: Maybe<AddResponse>;
+  addFollowedTeams?: Maybe<AddResponse>;
+};
+
+
+export type MutationAddFollowedLeagueArgs = {
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+export type MutationAddFollowedTeamsArgs = {
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type PageArticle = {
@@ -68,6 +104,8 @@ export type Query = {
   __typename?: 'Query';
   article?: Maybe<Article>;
   articles?: Maybe<Array<Maybe<Article>>>;
+  followedLeagues?: Maybe<Array<FollowedLeague>>;
+  followedTeams?: Maybe<Array<FollowedTeam>>;
   leagueArticles?: Maybe<Array<Maybe<Article>>>;
   leagues: Array<League>;
   pageArticles?: Maybe<PageArticle>;
@@ -180,12 +218,16 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  AddResponse: ResolverTypeWrapper<AddResponse>;
   Article: ResolverTypeWrapper<Article>;
   Author: ResolverTypeWrapper<Author>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  FollowedLeague: ResolverTypeWrapper<FollowedLeague>;
+  FollowedTeam: ResolverTypeWrapper<FollowedTeam>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   League: ResolverTypeWrapper<League>;
+  Mutation: ResolverTypeWrapper<{}>;
   PageArticle: ResolverTypeWrapper<PageArticle>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Query: ResolverTypeWrapper<{}>;
@@ -195,17 +237,27 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  AddResponse: AddResponse;
   Article: Article;
   Author: Author;
   Boolean: Scalars['Boolean']['output'];
+  FollowedLeague: FollowedLeague;
+  FollowedTeam: FollowedTeam;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   League: League;
+  Mutation: {};
   PageArticle: PageArticle;
   PageInfo: PageInfo;
   Query: {};
   String: Scalars['String']['output'];
   Team: Team;
+};
+
+export type AddResponseResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['AddResponse'] = ResolversParentTypes['AddResponse']> = {
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ArticleResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Article'] = ResolversParentTypes['Article']> = {
@@ -232,6 +284,18 @@ export type AuthorResolvers<ContextType = ApolloContext, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type FollowedLeagueResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['FollowedLeague'] = ResolversParentTypes['FollowedLeague']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FollowedTeamResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['FollowedTeam'] = ResolversParentTypes['FollowedTeam']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type LeagueResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['League'] = ResolversParentTypes['League']> = {
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -242,6 +306,11 @@ export type LeagueResolvers<ContextType = ApolloContext, ParentType extends Reso
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MutationResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addFollowedLeague?: Resolver<Maybe<ResolversTypes['AddResponse']>, ParentType, ContextType, RequireFields<MutationAddFollowedLeagueArgs, 'id' | 'name'>>;
+  addFollowedTeams?: Resolver<Maybe<ResolversTypes['AddResponse']>, ParentType, ContextType, RequireFields<MutationAddFollowedTeamsArgs, 'id' | 'name'>>;
 };
 
 export type PageArticleResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['PageArticle'] = ResolversParentTypes['PageArticle']> = {
@@ -258,6 +327,8 @@ export type PageInfoResolvers<ContextType = ApolloContext, ParentType extends Re
 export type QueryResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   article?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<QueryArticleArgs, 'id'>>;
   articles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType>;
+  followedLeagues?: Resolver<Maybe<Array<ResolversTypes['FollowedLeague']>>, ParentType, ContextType>;
+  followedTeams?: Resolver<Maybe<Array<ResolversTypes['FollowedTeam']>>, ParentType, ContextType>;
   leagueArticles?: Resolver<Maybe<Array<Maybe<ResolversTypes['Article']>>>, ParentType, ContextType, RequireFields<QueryLeagueArticlesArgs, 'id'>>;
   leagues?: Resolver<Array<ResolversTypes['League']>, ParentType, ContextType>;
   pageArticles?: Resolver<Maybe<ResolversTypes['PageArticle']>, ParentType, ContextType, Partial<QueryPageArticlesArgs>>;
@@ -277,9 +348,13 @@ export type TeamResolvers<ContextType = ApolloContext, ParentType extends Resolv
 };
 
 export type Resolvers<ContextType = ApolloContext> = {
+  AddResponse?: AddResponseResolvers<ContextType>;
   Article?: ArticleResolvers<ContextType>;
   Author?: AuthorResolvers<ContextType>;
+  FollowedLeague?: FollowedLeagueResolvers<ContextType>;
+  FollowedTeam?: FollowedTeamResolvers<ContextType>;
   League?: LeagueResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PageArticle?: PageArticleResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

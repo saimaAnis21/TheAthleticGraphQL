@@ -69,6 +69,32 @@ const resolvers: Resolvers = {
       const articles = await dataSources.articleDataSource.getLeagueArticles(id);
       return articles;
     },
+    async followedTeams(_root, _args, { dataSources }) {
+      return await dataSources.keyValueDatabase.query({ partitionKey: "followedTeams" });
+    },
+    async followedLeagues(_root, _args, { dataSources }) {
+      return await dataSources.keyValueDatabase.query({ partitionKey: "followedLeagues" });
+    },
+  },
+  Mutation: {
+    async addFollowedTeams(_, { id, name }, { dataSources }) {
+      const res = await dataSources.keyValueDatabase.put({
+        partitionKey: "followedTeams",
+        sortKey: id,
+        item: { id, name },
+      });
+      const success = !!res;
+      return { success };
+    },
+    async addFollowedLeague(_, { id, name }, { dataSources }) {
+      const res = await dataSources.keyValueDatabase.put({
+        partitionKey: "followedLeagues",
+        sortKey: id,
+        item: { id, name },
+      });
+      const success = !!res;
+      return { success };
+    },
   },
   Team: {
     async league(source, _fields, { dataSources }) {
