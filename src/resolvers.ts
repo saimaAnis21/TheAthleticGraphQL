@@ -52,9 +52,7 @@ const resolvers: Resolvers = {
 
       const articles = await dataSources.articleDataSource.getArticles();
       const selectedArticles = [];
-      if (teamIds.length < 0 && leagueIds.length < 0) {
-        selectedArticles = [...articles];
-      }
+      
       forEach(articles, (item) => {
         if (includes(teamIds, item.team.id) || includes(leagueIds, item.league.id)) {
           selectedArticles.push(item);
