@@ -21,7 +21,8 @@
   "scripts": {
     "generate": "graphql-codegen -c codegen.ts",
     "start": "yarn generate && ts-node-dev src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "yarn start"
   },
   "engines": {
     "node": ">=20.0.0 <21.0.0"
