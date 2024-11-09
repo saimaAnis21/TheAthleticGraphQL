@@ -20,7 +20,7 @@
   },
   "scripts": {
     "generate": "graphql-codegen -c codegen.ts",
-    "start": "yarn generate && ts-node-dev api/index.ts",
+    "start": "yarn generate && ts-node-dev src/index.ts",
     "test": "jest",
     "postinstall": "yarn start"
   },

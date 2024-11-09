@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "api",
+    "baseUrl": "src",
     "outDir": "dist",
     "target": "es6",
     "noEmit": true,
@@ -10,5 +10,5 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true
   },
-  "include": ["api/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }
