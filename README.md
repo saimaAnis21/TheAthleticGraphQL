@@ -1,24 +1,48 @@
-# apollo-server
+# The Athletic Apollo GraphQL Server
+# [Live Link]([https://crash-coursera.herokuapp.com/](https://the-athletic-graphql-server-217301ddd619.herokuapp.com/))
 
-The Apollo Server is a simple, Express-based implementation of Apollo Server (https://www.apollographql.com/docs/apollo-server/), a spec-compliant GraphQL server that can be used with any compatible GraphQL client.
+Backend for "The Athletic React App", a web application where users can select their favourtie teams and leagues and view news articles regarding them.
 
-Simply install the `node_modules` (we use yarn) and start the server. Feel free to use a node version manager (e.g. https://github.com/tj/n) if that helps.
+## Built With
 
-The GraphQL playground can be access via http://localhost:4000/graphql where you can inspect the current schema, and execute queries.
+- Apollo GraphQL
+- Javascript
+- TypeScript
+- Heroku
 
-## Endpoints
+## Getting Started
 
-The Apollo Server uses a few _external_ REST endpoints for retrieving teams and leagues, as well as articles and authors.
+To get a local copy up and running follow these simple example steps.
 
-Please note these REST endpoints are (considered) coming from _third party provider_ and the content should probably be handled with care (i.e. we don't know if the response is trustable or may contain malicious content). Below are the (sample) available endpoints for your reference:
+- Clone this project by typing ```git clone git@github.com:saimaAnis21/TheAthleticGraphQL.git```
+- cd into the root directory
+- Run git pull origin main
+- Simply install the `node_modules` (I use yarn) and start the server. Feel free to use a node version manager (e.g. https://github.com/tj/n) if that helps.
+- The GraphQL playground can be accessed via [graphQL endpoint](https://the-athletic-graphql-server-217301ddd619.herokuapp.com/) where you can inspect the current schema, and execute queries.
 
-- https://interview-backend.theathletic.com/teams
-- https://interview-backend.theathletic.com/teams/04DDC2D1-6752-4173-8217-BA8326D6CDB7
-- https://interview-backend.theathletic.com/teams/04DDC2D1-6752-4173-8217-BA8326D6CDB7/articles
-- https://interview-backend.theathletic.com/leagues
-- https://interview-backend.theathletic.com/leagues/8D59D789-49A3-43F0-86B5-23166ACBDC15
-- https://interview-backend.theathletic.com/leagues/8D59D789-49A3-43F0-86B5-23166ACBDC15/articles
-- https://interview-backend.theathletic.com/articles
-- https://interview-backend.theathletic.com/articles/FF1F32E5-7D36-4AC7-B855-3BBD5907ADF6
-- https://interview-backend.theathletic.com/authors
-- https://interview-backend.theathletic.com/authors/CD14297E-ABC0-47B5-AEF7-77803E0BCE36
+## Author
+
+👤 **Saima**
+
+**GitHub** [@saimaAnis21](https://github.com/saimaAnis21)
+
+**LinkedIn** [Saima Anis](https://www.linkedin.com/in/saima-anis/)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## 📝 License
+
+Copyright 2020 Saima Anis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
