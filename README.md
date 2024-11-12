@@ -1,7 +1,7 @@
 # The Athletic Apollo GraphQL Server
 # [Live Link]([https://crash-coursera.herokuapp.com/](https://the-athletic-graphql-server-217301ddd619.herokuapp.com/))
 
-Backend for "The Athletic React App", a web application where users can select their favourtie teams and leagues and view news articles regarding them.
+Backend for "The Athletic React App", a web application where users can select their favourite teams and leagues and view news articles regarding them.
 
 ## Built With
 
